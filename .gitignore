@@ -1,1 +1,2 @@
 .env
+glucose_app/**/__pycache__/
