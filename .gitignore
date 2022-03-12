@@ -1,2 +1,6 @@
 .env
-glucose_app/**/__pycache__/
+.idea/
+.vscode/
+*.pyc
+*.egg-info/
+.venv
