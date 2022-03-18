@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,6 +41,12 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "django_filters",
+    "glicemy",
+    "injection",
+    "insulin",
+    "meal",
+    "measurement",
+    "pacient",
 ]
 
 MIDDLEWARE = [
@@ -79,11 +86,11 @@ WSGI_APPLICATION = "glucose_app.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "USER": os.getenv("DATABASE_USER"),
-        "NAME": os.getenv("DATABASE_NAME"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        "HOST": os.getenv("DATABSE_HOST"),
-        "PORT": os.getenv("DATABASE_PORT"),
+        "USER": config("DATABASE_USER"),
+        "NAME": config("DATABASE_NAME"),
+        "PASSWORD": config("DATABASE_PASSWORD"),
+        "HOST": config("DATABSE_HOST"),
+        "PORT": config("DATABASE_PORT"),
     }
 }
 

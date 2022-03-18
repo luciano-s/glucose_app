@@ -30,7 +30,7 @@ class Insulin(models.Model):
         ),
     )
 
-    type = models.CharField(choices=INSULIN_TYPES)
+    type = models.CharField(choices=INSULIN_TYPES, max_length=50)
     name = models.CharField(max_length=100)
 
     def __str__(self) -> str:
