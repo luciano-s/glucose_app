@@ -78,7 +78,8 @@ WSGI_APPLICATION = "glucose_app.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "USER": os.getenv("DATABASE_USER"),
         "NAME": os.getenv("DATABASE_NAME"),
         "PASSWORD": os.getenv("DATABASE_PASSWORD"),
         "HOST": os.getenv("DATABSE_HOST"),
