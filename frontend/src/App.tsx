@@ -1,12 +1,28 @@
 import React from 'react';
-import './App.css';
+import { Col, Row } from 'antd';
+import { Route, Routes } from "react-router-dom"
+import { UserRegisterScreen } from './screens/UserRegisterScreen';
+export const App = () => {
 
-function App() {
   return (
     <div className="App">
-      Glucose-app is running!
+      <Row justify="center" style={{ backgroundColor: "#000" }}>
+        <Col>
+          <h1 >
+            <span style={{ color: "#fff" }}>
+              Glucose-app is running!
+            </span>
+          </h1>
+        </Col>
+      </Row>
+      <Row justify="center">
+        <Col>
+          <Routes>
+            <Route path="/" element={<UserRegisterScreen />} />
+          </Routes>
+        </Col>
+
+      </Row>
     </div>
   );
 }
-
-export default App;
