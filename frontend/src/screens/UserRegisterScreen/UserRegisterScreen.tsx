@@ -14,7 +14,7 @@ export const UserRegisterScreen: React.FC = () => {
         </Row>
         <Row justify="center">
           <Col>
-            <Link to="/">already have an account</Link>
+            <Link to="/login">already have an account</Link>
           </Col>
         </Row>
       </Col>
