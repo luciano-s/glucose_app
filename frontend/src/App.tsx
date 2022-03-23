@@ -2,6 +2,7 @@ import React from "react";
 import { Col, Row } from "antd";
 import { Route, Routes } from "react-router-dom";
 import { UserRegisterScreen } from "./screens/UserRegisterScreen";
+import { UserLoginScreen } from "./screens/UserLoginScreen";
 export const App = () => {
   return (
     <div className="App">
@@ -15,7 +16,8 @@ export const App = () => {
       <Row justify="center">
         <Col>
           <Routes>
-            <Route path="/" element={<UserRegisterScreen />} />
+            <Route path="/user_register" element={<UserRegisterScreen />} />
+            <Route path="/login" element={<UserLoginScreen />} />
           </Routes>
         </Col>
       </Row>
