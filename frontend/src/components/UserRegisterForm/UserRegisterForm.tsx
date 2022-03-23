@@ -16,12 +16,12 @@ export const UserRegisterForm = () => {
     passwdConfirmation: "",
     firstName: "",
     lastName: "",
-  })
+  });
 
   const onSubmit = () => {
     console.log(formData);
     // make request
-  }
+  };
 
   return (
     <Row style={{ margin: "16px" }} justify="center">
@@ -30,77 +30,111 @@ export const UserRegisterForm = () => {
           <Form.Item
             label="E-mail"
             name="e-mail"
-            rules={[{
-              type: "email", message: "The input must be a valid e-mail"
-            },
-            {
-              required: true, message: 'Please fill up the email!'
-            }]}
+            rules={[
+              {
+                type: "email",
+                message: "The input must be a valid e-mail",
+              },
+              {
+                required: true,
+                message: "Please fill up the email!",
+              },
+            ]}
           >
             <Input
-              onChange={
-                ({ target }) =>
-                  setFormData((prevState) => ({
-                    ...prevState, email: target.value
-                  }))
+              onChange={({ target }) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  email: target.value,
+                }))
               }
             />
           </Form.Item>
           <Form.Item
             label="Name"
             name="name"
-            rules={[{
-              required: true, message: 'Please fill up the name!'
-            }]}
+            rules={[
+              {
+                required: true,
+                message: "Please fill up the name!",
+              },
+            ]}
           >
-            <Input onChange={({ target }) => setFormData(
-              (prevState) => ({ ...prevState, firstName: target.value }))
-            } />
+            <Input
+              onChange={({ target }) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  firstName: target.value,
+                }))
+              }
+            />
           </Form.Item>
           <Form.Item
             label="Last Name"
             name="lastname"
-            rules={[{
-              required: true, message: 'Please fill up the last last name!'
-            }]}
+            rules={[
+              {
+                required: true,
+                message: "Please fill up the last last name!",
+              },
+            ]}
           >
-            <Input onChange={({ target }) => setFormData(
-              (prevState) => ({ ...prevState, lastName: target.value }))
-            }
+            <Input
+              onChange={({ target }) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  lastName: target.value,
+                }))
+              }
             />
           </Form.Item>
           <Form.Item
             label="Password"
             name="password"
-            rules={[{
-              required: true, message: 'Please, fill up the password!'
-            }]}
+            rules={[
+              {
+                required: true,
+                message: "Please, fill up the password!",
+              },
+            ]}
           >
-            <Input.Password onChange={({ target }) => setFormData(
-              (prevState) => ({ ...prevState, passwd: target.value }))
-            } />
+            <Input.Password
+              onChange={({ target }) =>
+                setFormData((prevState) => ({
+                  ...prevState,
+                  passwd: target.value,
+                }))
+              }
+            />
           </Form.Item>
           <Form.Item
             label="Confirm Password"
             name="confirmpassword"
             dependencies={["password"]}
-            rules={[{ required: true, message: 'Please, fill up the password!' },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                return Promise.
-                  reject(new Error(
-                    'The two passwords that you entered do not match!'
-                  ));
-              },
-            }),]}
+            rules={[
+              { required: true, message: "Please, fill up the password!" },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue("password") === value) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error(
+                      "The two passwords that you entered do not match!"
+                    )
+                  );
+                },
+              }),
+            ]}
           >
-            <Input.Password onChange={({ target }) =>
-              setFormData(
-                (prevState) => ({ ...formData, passwdConfirmation: target.value }))
-            } />
+            <Input.Password
+              onChange={({ target }) =>
+                setFormData((prevState) => ({
+                  ...formData,
+                  passwdConfirmation: target.value,
+                }))
+              }
+            />
           </Form.Item>
           <Form.Item>
             <Row justify="center">
@@ -108,16 +142,15 @@ export const UserRegisterForm = () => {
                 <Button
                   type="primary"
                   htmlType="submit"
-                  onClick={() => onSubmit()
-                  }>
+                  onClick={() => onSubmit()}
+                >
                   Submit
                 </Button>
               </Col>
             </Row>
           </Form.Item>
         </Form>
-
       </Col>
     </Row>
-  )
-}
+  );
+};
