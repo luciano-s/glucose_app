@@ -4,4 +4,4 @@ from api.user.login import LoginUserViewSet
 router = routers.DefaultRouter()
 
 router.register(r"user", RegisterUserViewSet, basename="user")
-router.register(r"login", LoginUserViewSet)
+router.register(r"login", LoginUserViewSet, basename="login")

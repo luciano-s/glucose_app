@@ -7,19 +7,19 @@ from user.models import User
 class LoginUserViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
 
-    def get_object(self):
+    def get_object(self, request):
         try:
-            user = User.objects.get(email=self.request.data.get("email", None), password=self.request.data.get("password", None))
+            print(request.data)
+            user = User.objects.get(email=request.data.get("email", None), password=request.data.get("password", None))
         except Exception:
-            return False
+            raise Exception
         return user
 
-    def list(self, request):
+    def create(self, request):
+        user = self.get_object(request)
         
-        user = self.get_object()
-
         if user:
-            token = Token.objects.create(user=user)
+            token, _ = Token.objects.get_or_create(user=user)
             return response.Response(data={"token": token.key}, status=status.HTTP_200_OK)
 
         return response.Response({"message": "Usuário ou senha inválidos"}, status=status.HTTP_400_BAD_REQUEST)
