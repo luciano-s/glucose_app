@@ -1,0 +1,1 @@
+from .user.register import RegisterUserViewSet
