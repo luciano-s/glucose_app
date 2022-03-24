@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Input, Row } from "antd";
+import { AuthApi } from "../../api/authApi/AuthApi";
 
 interface IUserLoginForm {
   email: string;
@@ -13,8 +14,8 @@ export const UserLoginForm = () => {
   });
 
   const onSubmit = () => {
-    console.log(formData);
-    // make request
+    const api = new AuthApi();
+    api.login({ email: formData.email, password: formData.passwd });
   };
 
   return (
