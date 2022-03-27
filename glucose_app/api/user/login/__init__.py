@@ -1,1 +1,1 @@
-from .viewset import LoginUserViewSet
+from .viewset import AuthUserViewSet

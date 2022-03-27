@@ -82,8 +82,8 @@ TEMPLATES = [
 ]
 
 
-CORS_ALLOWED_ORIGINS = [    
-"http://localhost:3000",
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
 ]
 
 WSGI_APPLICATION = "glucose_app.wsgi.application"
@@ -146,3 +146,9 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 AUTH_USER_MODEL = "user.User"
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.TokenAuthentication",
+    ]
+}
