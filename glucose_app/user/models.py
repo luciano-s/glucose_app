@@ -1,7 +1,10 @@
+from xmlrpc.client import boolean
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from rest_framework.authtoken.models import Token
 from .manager import UserManager
+
 
 class User(AbstractUser):
     username = None

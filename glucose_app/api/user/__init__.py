@@ -1,2 +1,2 @@
 from .register import RegisterUserViewSet
-from .login import LoginUserViewSet
+from .login import AuthUserViewSet

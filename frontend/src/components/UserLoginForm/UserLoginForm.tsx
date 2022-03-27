@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { Button, Col, Form, Input, Row } from "antd";
+import { Button, Col, Form, Input, message, Row } from "antd";
 import { AuthApi } from "../../api/authApi/AuthApi";
+import { useNavigate } from "react-router-dom";
 
 interface IUserLoginForm {
   email: string;
@@ -12,12 +13,28 @@ export const UserLoginForm = () => {
     email: "",
     passwd: "",
   });
+  const navigate = useNavigate()
+  const api = new AuthApi();
 
-  const onSubmit = () => {
-    const api = new AuthApi();
-    api.login({ email: formData.email, password: formData.passwd });
+  const onSubmit = async () => {
+    const { status, msg } = await api.login({
+      email: formData.email,
+      password: formData.passwd,
+    });
+    if (status !== 200) {
+      message.error(`Houve erros ao fazer login: ${msg}`);
+    } else {
+      console.log("should navigate");
+      navigate("/dashboard");
+    }
   };
 
+  const logout = async () => {
+    const { status, msg } = await api.logout();
+    if (status !== 200) {
+      message.error(`Houve erros ao fazer logout: ${msg}`);
+    }
+  };
   return (
     <Row style={{ margin: "16px" }} justify="center">
       <Col>
@@ -74,6 +91,19 @@ export const UserLoginForm = () => {
                   onClick={() => onSubmit()}
                 >
                   Login
+                </Button>
+              </Col>
+            </Row>
+          </Form.Item>
+          <Form.Item>
+            <Row justify="center">
+              <Col>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  onClick={() => logout()}
+                >
+                  Logout
                 </Button>
               </Col>
             </Row>
