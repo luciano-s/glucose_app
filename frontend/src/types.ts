@@ -17,3 +17,7 @@ export interface IMeasurement {
   timestamp: string;
   is_glucose_level_good: boolean;
 }
+
+export interface IMeal{
+  
+}

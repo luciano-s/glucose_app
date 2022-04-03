@@ -4,7 +4,7 @@ import { RegisterGlucoseModal } from "../../components/RegisterGlucoseModal";
 import { MeasurementApi } from "../../api/measurementApi/measurement";
 import { IMeasurement, IPacient } from "../../types";
 import { MeasurementTable } from "../../components/MeasurementTable";
-
+import { RegisterMealModal } from "../../components/RegisterMealModal";
 interface IProps {
   pacient: IPacient | null;
 }
@@ -43,9 +43,7 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
               <Col span={12}>
                 <Row justify="center">
                   <Col>
-                    <Button style={{ width: "400px", height: "200px" }}>
-                      <Title>Registrar refeição</Title>
-                    </Button>
+                    {pacient && <RegisterMealModal pacient={pacient} />}
                   </Col>
                 </Row>
               </Col>

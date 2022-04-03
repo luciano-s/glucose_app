@@ -1,0 +1,1 @@
+export { RegisterMealModal } from "./RegisterMealModal";
