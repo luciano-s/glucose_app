@@ -16,14 +16,9 @@ interface IMeasurementData {
 interface ICreateMeal {
   type: string;
   cho: number;
-  measurement: {
-    glycemia: number;
-    timestamp: string;
-  };
-  injection: {
-    timestamp: string;
-    ui: number;
-  };
+  timestamp: string;
+  glycemia: number;
+  ui: number;
 }
 
 interface IMeasurementsFilters {

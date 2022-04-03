@@ -33,7 +33,7 @@ export const RegisterMealModal: React.FC<IProps> = ({ pacient }) => {
     cho: 0,
     glycemia: -1,
     dateTime: "",
-    mealType: "",
+    mealType: "BREAKFAST",
   });
   const mealTypes = [
     { key: "BREAKFAST", value: "Café da manhã" },
@@ -51,14 +51,9 @@ export const RegisterMealModal: React.FC<IProps> = ({ pacient }) => {
     const data = {
       type: formData.mealType,
       cho: formData.cho,
-      measurement: {
-        glycemia: formData.glycemia,
-        timestamp: formatDateTimeFromBRStdToApi(formData.dateTime),
-      },
-      injection: {
-        timestamp: formatDateTimeFromBRStdToApi(formData.dateTime),
-        ui: formData.ui,
-      },
+      glycemia: formData.glycemia,
+      timestamp: formatDateTimeFromBRStdToApi(formData.dateTime),
+      ui: formData.ui,
     };
 
     const { status, msg } = await api.createMeal(data, pacient);

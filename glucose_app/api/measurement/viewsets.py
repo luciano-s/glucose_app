@@ -31,7 +31,6 @@ class MeasurementViewSet(viewsets.GenericViewSet):
     def create(self, request):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        print(serializer.validated_data)
         repository = MeasurementRepository()
 
         use_case = CreateMeasurementUseCase(
