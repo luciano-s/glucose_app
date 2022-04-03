@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Row, Tabs, Typography } from "antd";
+import { Col, Row, Tabs, Typography } from "antd";
 import { RegisterGlucoseModal } from "../../components/RegisterGlucoseModal";
 import { MeasurementApi } from "../../api/measurementApi/measurement";
 import { IMeasurement, IPacient } from "../../types";
 import { MeasurementTable } from "../../components/MeasurementTable";
 import { RegisterMealModal } from "../../components/RegisterMealModal";
+import { Container } from "../../styled_components/Container";
+
 interface IProps {
   pacient: IPacient | null;
 }
@@ -50,14 +52,16 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
             </Row>
           </Col>
         </Row>
-        <Tabs>
-          <TabPane tab="Medições" key={1}>
-            <MeasurementTable measurements={measurements} />
-          </TabPane>
-          <TabPane tab="Refeições" key={2}>
-            <p>tabela com refeições</p>
-          </TabPane>
-        </Tabs>
+        <Container>
+          <Tabs>
+            <TabPane tab="Medições" key={1}>
+              <MeasurementTable measurements={measurements} />
+            </TabPane>
+            <TabPane tab="Refeições" key={2}>
+              <p>tabela com refeições</p>
+            </TabPane>
+          </Tabs>
+        </Container>
       </Col>
     </Row>
   );

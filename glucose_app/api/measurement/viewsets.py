@@ -19,14 +19,14 @@ class MeasurementViewSet(viewsets.GenericViewSet):
     def get_queryset(self):
         pacient = self.request.query_params.get("pacient", None)
         if pacient:
-            return Measurement.objects.filter(pacient__id=pacient)
-        return Measurement.objects.filter(pacient__user=self.request.user)
+            return Measurement.objects.filter(pacient__id=pacient, meal__isnull=True)
+        return Measurement.objects.filter(
+            pacient__user=self.request.user, meal__isnull=True
+        )
 
     def list(self, request):
         serializer = self.get_serializer(self.get_queryset(), many=True)
-        return response.Response(
-            data=serializer.data, status=status.HTTP_200_OK
-        )
+        return response.Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
         serializer = self.get_serializer(data=request.data)

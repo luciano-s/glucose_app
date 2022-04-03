@@ -1,4 +1,5 @@
 from rest_framework import response, status, viewsets
+from rest_framework.permissions import IsAuthenticated
 from meal.models import Meal
 from .serializer import CreateMealSerializer, MealSerializer
 from .repository import MealRepository
@@ -6,6 +7,8 @@ from .use_case import CreateMealUseCase
 
 
 class MealViewSet(viewsets.GenericViewSet):
+    permission_classes = [IsAuthenticated]
+
     def get_queryset(self):
         return Meal.objects.filter(user=self.request.user).select_related(
             "measurement", "injection"
