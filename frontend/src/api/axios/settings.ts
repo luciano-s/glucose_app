@@ -14,7 +14,6 @@ export const axiosConfig: IAxionsConfig = {
   timeout: 30000,
   headers: {
     "Content-Type": "application/json",
-    Authorization: `Token ${sessionStorage.getItem("token")}`,
   },
 };
 

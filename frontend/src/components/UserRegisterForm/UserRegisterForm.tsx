@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Col, Form, Input, Row } from "antd";
-import { AuthApi } from "../../api/authApi/AuthApi";
+import { RegisterUserApi } from "../../api/authApi/RegisterUserApi";
+
 interface IUserRegisterForm {
   email: string;
   passwd: string;
@@ -19,7 +20,7 @@ export const UserRegisterForm = () => {
   });
 
   const onSubmit = () => {
-    const api = new AuthApi();
+    const api = new RegisterUserApi();
     api.createUser({
       email: formData.email,
       password: formData.passwd,

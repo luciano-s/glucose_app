@@ -1,40 +1,23 @@
-import React, { useState } from "react";
-import { Button, Col, Form, Input, message, Row } from "antd";
-import { AuthApi } from "../../api/authApi/AuthApi";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import { Button, Col, Form, Input, Row } from "antd";
+
 
 interface IUserLoginForm {
   email: string;
-  passwd: string;
+  password: string;
 }
 
-export const UserLoginForm = () => {
-  const [formData, setFormData] = useState<IUserLoginForm>({
-    email: "",
-    passwd: "",
-  });
-  const navigate = useNavigate()
-  const api = new AuthApi();
+interface IProps {
+  onSubmit: () => void;
+  logout: () => void;
+  setData: (fn: (prevState: IUserLoginForm) => IUserLoginForm) => void;
+}
 
-  const onSubmit = async () => {
-    const { status, msg } = await api.login({
-      email: formData.email,
-      password: formData.passwd,
-    });
-    if (status !== 200) {
-      message.error(`Houve erros ao fazer login: ${msg}`);
-    } else {
-      console.log("should navigate");
-      navigate("/dashboard");
-    }
-  };
-
-  const logout = async () => {
-    const { status, msg } = await api.logout();
-    if (status !== 200) {
-      message.error(`Houve erros ao fazer logout: ${msg}`);
-    }
-  };
+export const UserLoginForm: React.FC<IProps> = ({
+  logout,
+  onSubmit,
+  setData,
+}) => {
   return (
     <Row style={{ margin: "16px" }} justify="center">
       <Col>
@@ -55,7 +38,7 @@ export const UserLoginForm = () => {
           >
             <Input
               onChange={({ target }) =>
-                setFormData((prevState) => ({
+                setData((prevState: IUserLoginForm) => ({
                   ...prevState,
                   email: target.value,
                 }))
@@ -75,9 +58,9 @@ export const UserLoginForm = () => {
           >
             <Input.Password
               onChange={({ target }) =>
-                setFormData((prevState) => ({
+                setData((prevState: IUserLoginForm) => ({
                   ...prevState,
-                  passwd: target.value,
+                  password: target.value,
                 }))
               }
             />

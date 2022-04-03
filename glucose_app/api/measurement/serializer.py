@@ -11,6 +11,6 @@ class MeasurementSerializer(serializers.ModelSerializer):
 
 
 class CreateMeasurementSerializer(serializers.Serializer):
-    date = serializers.DateTimeField("%Y-%m-%dT%H:%M")
+    timestamp = serializers.DateTimeField("%Y-%m-%dT%H:%M")
     glicemy = serializers.IntegerField(min_value=0)
     pacient = serializers.PrimaryKeyRelatedField(queryset=Pacient.objects.all())

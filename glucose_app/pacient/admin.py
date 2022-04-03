@@ -1,3 +1,9 @@
 from django.contrib import admin
+from pacient.models import Pacient
 
-# Register your models here.
+
+class PacientAdmin(admin.ModelAdmin):
+    model = Pacient
+
+
+admin.site.register(Pacient, PacientAdmin)

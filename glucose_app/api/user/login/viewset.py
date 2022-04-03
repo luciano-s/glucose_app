@@ -1,16 +1,15 @@
-from sys import exc_info
-from rest_framework import response, serializers, status, viewsets
+import json
+from rest_framework import response, status, viewsets
 from rest_framework.decorators import action, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.authtoken.models import Token
 from user.models import User
+from pacient.models import Pacient
+from .serializer import PacientSerializer
 
 
 class AuthUserViewSet(viewsets.ViewSet):
     queryset = User.objects.all()
-
-    def get_serializer_class(self):
-        return serializers.Serializer
 
     def get_object(self, request):
         try:
@@ -28,8 +27,12 @@ class AuthUserViewSet(viewsets.ViewSet):
 
         if user:
             token, _ = Token.objects.get_or_create(user=user)
+            pacient = Pacient.objects.get(user=user)
+            serializer = PacientSerializer(pacient)
+
             return response.Response(
-                data={"token": token.key}, status=status.HTTP_200_OK
+                data={"pacient": serializer.data, "token": token.key},
+                status=status.HTTP_200_OK,
             )
 
         return response.Response(
@@ -50,3 +53,6 @@ class AuthUserViewSet(viewsets.ViewSet):
         return response.Response(
             {"message": "Erro ao fazer logout"}, status=status.HTTP_400_BAD_REQUEST
         )
+
+    def create_user():
+        pass

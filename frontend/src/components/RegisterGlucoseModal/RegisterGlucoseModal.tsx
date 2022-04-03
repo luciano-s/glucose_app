@@ -1,24 +1,49 @@
 import React, { useState } from "react";
-import { Button, DatePicker, Form, InputNumber, Modal, Typography } from "antd";
+import {
+  Button,
+  DatePicker,
+  Form,
+  InputNumber,
+  message,
+  Modal,
+  Typography,
+} from "antd";
 import { Moment } from "moment";
+import { MeasurementApi } from "../../api/measurementApi/measurement";
+import { formatDateTimeFromBRStdToApi } from "../../utils";
+import { IPacient } from "../../types";
 
 interface IFormData {
   glicemy: number;
   dateTime: string;
 }
 
-export const RegisterGlucoseModal = () => {
+interface IProps {
+  pacient: IPacient;
+}
+
+export const RegisterGlucoseModal: React.FC<IProps> = ({ pacient }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [formData, setFormData] = useState<IFormData>({
     glicemy: -1,
     dateTime: "",
   });
+
   const showModal = () => setIsModalVisible(true);
   const { Title } = Typography;
+  const handleOk = async () => {
+    console.log("MeasurementApi");
+    const api = new MeasurementApi();
+    const data = {
+      glicemy: formData.glicemy,
+      timestamp: formatDateTimeFromBRStdToApi(formData.dateTime),
+    };
 
-  const handleOk = () => {
-      const api = 
-    console.log(formData);
+    const { status, msg } = await api.createMeasurement({ data, pacient });
+
+    if (status !== 201) {
+      message.error(`Houve erros ao cadastrar a glicemia: ${msg}`);
+    }
   };
 
   const onCancel = () => {

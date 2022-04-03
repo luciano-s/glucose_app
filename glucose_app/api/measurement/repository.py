@@ -4,4 +4,4 @@ from typing import Dict
 
 class MeasurementRepository:
     def create_measurement(self, data: Dict) -> Measurement:
-        pass
+        Measurement.objects.create(**data)

@@ -31,3 +31,4 @@ class TestCreateMeasurementUseCase:
             }
         )
         repository.create_measurement.assert_called_once_with(data=d)
+
