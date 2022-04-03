@@ -12,7 +12,7 @@ export const App = () => {
   const [authPacient, setAuthPacient] = useState<IPacient | null>(null);
   console.log("authPacient");
   console.log(authPacient);
-  console.log(authPacient === null);
+  
   return (
     <pacientContext.Provider
       value={{

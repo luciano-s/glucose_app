@@ -8,7 +8,7 @@ const api = axios.create({
 });
 
 interface IMeasurementData {
-  glicemy: number;
+  glycemia: number;
   timestamp: string;
 }
 

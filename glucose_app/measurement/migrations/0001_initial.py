@@ -10,7 +10,6 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('pacient', '0001_initial'),
-        ('glicemy', '0001_initial'),
     ]
 
     operations = [

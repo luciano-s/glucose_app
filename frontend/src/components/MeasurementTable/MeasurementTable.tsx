@@ -7,7 +7,7 @@ interface IProps {
   measurements: Array<IMeasurement>;
 }
 
-export const MeasurementList: React.FC<IProps> = ({ measurements }) => {
+export const MeasurementTable: React.FC<IProps> = ({ measurements }) => {
   const columns = [
     {
       title: "ID",
@@ -16,19 +16,23 @@ export const MeasurementList: React.FC<IProps> = ({ measurements }) => {
     },
     {
       title: "Glicemia",
-      dataIndex: "glicemy",
-      key: "glicemy",
+      dataIndex: "glycemia",
+      key: "glycemia",
     },
     { title: "Data", dataIndex: "timestamp", key: "timestamp" },
   ];
-  const getColor = (value: number): string =>
-    value <= 75 || value > 83 ? "#CC3333" : "#b75517";
+  const getColor = (measurement: IMeasurement): string =>
+    measurement.is_glucose_level_good ? "#1bf20d" : "#CC3333";
 
   const formatedData = measurements.map((measurement) => ({
     ...measurement,
-    glicemy: (
-      <span style={{ color: getColor(measurement.glicemy) }}>
-        {measurement.glicemy}
+    glycemia: (
+      <span
+        style={{
+          color: getColor(measurement),
+        }}
+      >
+        {measurement.glycemia}
       </span>
     ),
   }));

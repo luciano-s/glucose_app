@@ -14,7 +14,7 @@ import { formatDateTimeFromBRStdToApi } from "../../utils";
 import { IPacient } from "../../types";
 
 interface IFormData {
-  glicemy: number;
+  glycemia: number;
   dateTime: string;
 }
 
@@ -25,7 +25,7 @@ interface IProps {
 export const RegisterGlucoseModal: React.FC<IProps> = ({ pacient }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [formData, setFormData] = useState<IFormData>({
-    glicemy: -1,
+    glycemia: -1,
     dateTime: "",
   });
 
@@ -35,7 +35,7 @@ export const RegisterGlucoseModal: React.FC<IProps> = ({ pacient }) => {
     console.log("MeasurementApi");
     const api = new MeasurementApi();
     const data = {
-      glicemy: formData.glicemy,
+      glycemia: formData.glycemia,
       timestamp: formatDateTimeFromBRStdToApi(formData.dateTime),
     };
 
@@ -68,7 +68,7 @@ export const RegisterGlucoseModal: React.FC<IProps> = ({ pacient }) => {
           <Form.Item label="Glicemia (mg/dl)">
             <InputNumber
               onChange={(value: number) =>
-                setFormData((prev: IFormData) => ({ ...prev, glicemy: value }))
+                setFormData((prev: IFormData) => ({ ...prev, glycemia: value }))
               }
             />
           </Form.Item>

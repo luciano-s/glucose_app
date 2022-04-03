@@ -11,7 +11,7 @@ class TestCreateMeasurementUseCase:
     def test_execute(self, mocker):
         p = baker.make("pacient.Pacient")
 
-        data = {"glicemy": 100, "pacient": p.id, "date": f"2022-03-27 15:30"}
+        data = {"glycemia": 100, "pacient": p.id, "date": f"2022-03-27 15:30"}
         serializer = CreateMeasurementSerializer(data=data)
 
         assert serializer.is_valid(raise_exception=True)
@@ -26,7 +26,7 @@ class TestCreateMeasurementUseCase:
                 "date": datetime(
                     year=2022, month=3, day=27, hour=15, minute=30, tzinfo=timezone.utc
                 ),
-                "glicemy": 100,
+                "glycemia": 100,
                 "pacient": p,
             }
         )

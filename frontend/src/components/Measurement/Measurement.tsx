@@ -10,7 +10,7 @@ export const Measurement: React.FC<IProps> = ({ measurement }) => {
   return (
     <Row>
       <Col span={10}>
-        <Title level={3}>Glicemia: {measurement.glicemy}</Title>
+        <Title level={3}>Glicemia: {measurement.glycemia}</Title>
       </Col>
       <Col span={14}>
         <Title level={4}>Data: {measurement.timestamp}</Title>

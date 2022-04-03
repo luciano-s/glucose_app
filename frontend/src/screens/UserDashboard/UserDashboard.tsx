@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Col, Row, Typography } from "antd";
+import { Button, Col, Row, Tabs, Typography } from "antd";
 import { RegisterGlucoseModal } from "../../components/RegisterGlucoseModal";
 import { MeasurementApi } from "../../api/measurementApi/measurement";
 import { IMeasurement, IPacient } from "../../types";
-import { MeasurementList } from "../../components/MeasurementList";
+import { MeasurementTable } from "../../components/MeasurementTable";
 
 interface IProps {
   pacient: IPacient | null;
@@ -13,7 +13,7 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
   const { Title } = Typography;
   const [measurements, setMeasurements] = useState<Array<IMeasurement>>([]);
   const api = new MeasurementApi();
-
+  const { TabPane } = Tabs;
   useEffect(() => {
     if (pacient) {
       const getMeasurements = async () =>
@@ -52,8 +52,14 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
             </Row>
           </Col>
         </Row>
-        <Title level={2}>Medições</Title>
-        <MeasurementList measurements={measurements} />
+        <Tabs>
+          <TabPane tab="Medições" key={1}>
+            <MeasurementTable measurements={measurements} />
+          </TabPane>
+          <TabPane tab="Refeições" key={2}>
+            <p>tabela com refeições</p>
+          </TabPane>
+        </Tabs>
       </Col>
     </Row>
   );

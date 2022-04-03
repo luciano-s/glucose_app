@@ -1,5 +1,5 @@
 from django.forms import ValidationError
-from rest_framework import mixins, response, status, viewsets
+from rest_framework import  response, status, viewsets
 from .serializer import UserRegisterSerializer
 from user.models import User
 from .use_case import RegisterUserUseCase

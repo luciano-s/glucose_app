@@ -13,6 +13,7 @@ export interface IPacient {
 
 export interface IMeasurement {
   id: number;
-  glicemy: number;
+  glycemia: number;
   timestamp: string;
+  is_glucose_level_good: boolean;
 }
