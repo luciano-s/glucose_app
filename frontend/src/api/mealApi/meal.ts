@@ -1,6 +1,6 @@
 import axios from "axios";
 import { axiosConfig } from "../axios/settings";
-import { IMeal, IPacient } from "../../types";
+import { IListMeal, IPacient } from "../../types";
 import { formatDateTimeFromApiStdToBRS } from "../../utils";
 
 const api = axios.create({
@@ -60,12 +60,23 @@ export class MealApi {
       });
   }
 
-  async getAllMeals({ pacient, filters }: IGetMeasurements): Promise<IMeal[]> {
+  async getAllMeals({
+    pacient,
+    filters,
+  }: IGetMeasurements): Promise<IListMeal[]> {
     api.defaults.headers.common["Authorization"] =
       `Token ${pacient.token}` || "";
     const response = await api.get("", { params: filters });
-    return response.data.map((item: IMeal) => ({
+    return response.data.map((item: IListMeal) => ({
       ...item,
+      measurement: {
+        ...item.measurement,
+        timestamp: formatDateTimeFromApiStdToBRS(item.measurement.timestamp),
+      },
+      injection: {
+        ...item.injection,
+        timestamp: formatDateTimeFromApiStdToBRS(item.injection.timestamp),
+      },
     }));
   }
 }
