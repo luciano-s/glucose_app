@@ -20,9 +20,13 @@ interface IFormData {
 
 interface IProps {
   pacient: IPacient;
+  setShouldRefetch: (fetch: boolean) => void;
 }
 
-export const RegisterGlucoseModal: React.FC<IProps> = ({ pacient }) => {
+export const RegisterGlucoseModal: React.FC<IProps> = ({
+  pacient,
+  setShouldRefetch,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [formData, setFormData] = useState<IFormData>({
     glycemia: -1,
@@ -32,7 +36,6 @@ export const RegisterGlucoseModal: React.FC<IProps> = ({ pacient }) => {
   const showModal = () => setIsModalVisible(true);
   const { Title } = Typography;
   const handleOk = async () => {
-    console.log("MeasurementApi");
     const api = new MeasurementApi();
     const data = {
       glycemia: formData.glycemia,
@@ -40,9 +43,12 @@ export const RegisterGlucoseModal: React.FC<IProps> = ({ pacient }) => {
     };
 
     const { status, msg } = await api.createMeasurement({ data, pacient });
-
     if (status !== 201) {
       message.error(`Houve erros ao cadastrar a glicemia: ${msg}`);
+    } else {
+      message.success(`Glicemia registrada com sucesso!`);
+      setShouldRefetch(true);
+      setIsModalVisible(false);
     }
   };
 

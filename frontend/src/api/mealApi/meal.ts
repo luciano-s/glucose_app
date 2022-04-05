@@ -41,7 +41,6 @@ export class MealApi {
       ...data,
       pacient: pacient.id,
     };
-    console.log(requestData);
     return api
       .post("", { ...requestData })
       .then((response) => ({ status: response.status, msg: response.data }))

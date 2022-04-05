@@ -13,18 +13,12 @@ export interface ILogin {
   password: string;
 }
 
-const authenticatedApi = axios.create({
+const api = axios.create({
   ...axiosConfig,
   baseURL: `${axiosConfig.baseURL}/auth/`,
 });
 
-const unauthenticatedApi = axios.create({
-  ...axiosUnauthConfig,
-  headers: {
-    "Content-Type": "application/json",
-  },
-  baseURL: `${axiosConfig.baseURL}/auth/`,
-});
+
 export class AuthApi {
 
   async login(
@@ -34,7 +28,7 @@ export class AuthApi {
     data?: { pacient: IPacient; token: string };
     errorMsg?: string;
   }> {
-    return unauthenticatedApi
+    return api
       .post(`login/`, data)
       .then((response) => ({ status: response.status, data: response.data }))
       .catch((error) => {
@@ -52,9 +46,9 @@ export class AuthApi {
   }
 
   async logout(pacient: IPacient): Promise<{ status: number; data: string }> {
-    authenticatedApi.defaults.headers.common["Authorization"] =
+    api.defaults.headers.common["Authorization"] =
       `Token ${pacient.token}` || "";
-    return authenticatedApi
+    return api
       .get(`logout/`)
       .then((response) => ({
         status: response.status,

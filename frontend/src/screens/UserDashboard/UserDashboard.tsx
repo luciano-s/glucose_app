@@ -4,10 +4,11 @@ import { RegisterGlucoseModal } from "../../components/RegisterGlucoseModal";
 import { MeasurementApi } from "../../api/measurementApi/measurement";
 import { IListMeal, IMeasurement, IPacient } from "../../types";
 import { MeasurementTable } from "../../components/MeasurementTable";
+import { MealTable } from "../../components/MealTable";
 import { RegisterMealModal } from "../../components/RegisterMealModal";
 import { Container } from "../../styled_components/Container";
-import { MealTable } from "../../components/MealTable";
 import { MealApi } from "../../api/mealApi/meal";
+
 interface IProps {
   pacient: IPacient | null;
 }
@@ -15,11 +16,13 @@ interface IProps {
 export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
   const [measurements, setMeasurements] = useState<Array<IMeasurement>>([]);
   const [meals, setMeals] = useState<Array<IListMeal>>([]);
+  const [shouldFetchMeal, setShouldFetchMeal] = useState(true);
+  const [shouldFetchMeasurement, setShouldFetchMeasurement] = useState(true);
   const { TabPane } = Tabs;
   const api = new MeasurementApi();
 
   useEffect(() => {
-    if (pacient) {
+    if (pacient && shouldFetchMeasurement) {
       const getMeasurements = async () => {
         const api = new MeasurementApi();
         setMeasurements(
@@ -30,11 +33,12 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
         );
       };
       getMeasurements();
+      setShouldFetchMeasurement(false);
     }
-  }, [pacient]);
+  }, [pacient, shouldFetchMeasurement]);
 
   useEffect(() => {
-    if (pacient) {
+    if (pacient && shouldFetchMeal) {
       const getMeals = async () => {
         const api = new MealApi();
         setMeals(
@@ -42,8 +46,9 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
         );
       };
       getMeals();
+      setShouldFetchMeal(false);
     }
-  }, [pacient]);
+  }, [pacient, shouldFetchMeal]);
 
   return (
     <Row justify="center" style={{ marginTop: "64px" }}>
@@ -54,14 +59,28 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
               <Col span={12}>
                 <Row justify="center">
                   <Col>
-                    {pacient && <RegisterGlucoseModal pacient={pacient} />}
+                    {pacient && (
+                      <RegisterGlucoseModal
+                        pacient={pacient}
+                        setShouldRefetch={(fetch: boolean) =>
+                          setShouldFetchMeasurement(fetch)
+                        }
+                      />
+                    )}
                   </Col>
                 </Row>
               </Col>
               <Col span={12}>
                 <Row justify="center">
                   <Col>
-                    {pacient && <RegisterMealModal pacient={pacient} />}
+                    {pacient && (
+                      <RegisterMealModal
+                        pacient={pacient}
+                        setShouldRefetch={(fetch: boolean) =>
+                          setShouldFetchMeal(fetch)
+                        }
+                      />
+                    )}
                   </Col>
                 </Row>
               </Col>

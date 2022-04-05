@@ -3,6 +3,7 @@ import { Col, Table } from "antd";
 import { Container } from "../../styled_components/Container";
 import { IListMeal } from "../../types";
 import { getColor } from "../../utils";
+
 interface IProps {
   meals: Array<IListMeal>;
 }

@@ -10,9 +10,13 @@ class MealViewSet(viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Meal.objects.filter(
-            measurement__pacient__id=self.request.query_params["pacient"]
-        ).select_related("measurement__pacient", "injection")
+        return (
+            Meal.objects.filter(
+                measurement__pacient__id=self.request.query_params["pacient"]
+            )
+            .select_related("measurement__pacient", "injection")
+            .order_by("-measurement__timestamp")
+        )
 
     def get_serializer_class(self):
         return {"GET": MealSerializer, "POST": CreateMealSerializer}[

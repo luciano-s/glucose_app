@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Col, message, Row } from "antd";
 import { Link, useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 import { UserLoginForm } from "../../components/UserLoginForm";
 import { AuthApi } from "../../api/authApi/AuthApi";
 import { IPacient } from "../../types";
@@ -17,7 +18,8 @@ export const UserLoginScreen: React.FC<IProps> = ({ value }) => {
     email: "",
     password: "",
   });
-  const { pacient, setPacient } = value;
+  const [_, setCookie] = useCookies(["pacient"]);
+  const { pacient } = value;
   const navigate = useNavigate();
 
   const api = new AuthApi();
@@ -32,7 +34,8 @@ export const UserLoginScreen: React.FC<IProps> = ({ value }) => {
 
     if (data) {
       const { pacient, token } = data;
-      setPacient({ ...pacient, token });
+      setCookie("pacient", { ...pacient, token });
+      navigate("/dashboard");
     }
   };
 

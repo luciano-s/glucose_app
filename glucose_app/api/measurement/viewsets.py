@@ -18,11 +18,15 @@ class MeasurementViewSet(viewsets.GenericViewSet):
 
     def get_queryset(self):
         pacient = self.request.query_params.get("pacient", None)
-        if pacient:
-            return Measurement.objects.filter(pacient__id=pacient, meal__isnull=True)
-        return Measurement.objects.filter(
-            pacient__user=self.request.user, meal__isnull=True
+
+        qs = (
+            Measurement.objects.filter(pacient__id=pacient, meal__isnull=True)
+            if pacient
+            else Measurement.objects.filter(
+                pacient__user=self.request.user, meal__isnull=True
+            )
         )
+        return qs.order_by("-timestamp")
 
     def list(self, request):
         serializer = self.get_serializer(self.get_queryset(), many=True)

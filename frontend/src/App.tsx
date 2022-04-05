@@ -1,6 +1,8 @@
-import React, { useState } from "react";
-import { Button, Col, Row, Typography } from "antd";
-import { Route, Routes } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
+import { Avatar, Button, Col, Row, Typography } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import { UserRegisterScreen } from "./screens/UserRegisterScreen";
 import { UserLoginScreen } from "./screens/UserLoginScreen";
 import { UserDashboard } from "./screens/UserDashboard/UserDashboard";
@@ -10,9 +12,16 @@ import { pacientContext } from "./context/pacientContext";
 export const App = () => {
   const { Title } = Typography;
   const [authPacient, setAuthPacient] = useState<IPacient | null>(null);
-  console.log("authPacient");
-  console.log(authPacient);
-  
+  const [cookies, setCookies] = useCookies(["pacient"]);
+
+  useEffect(() => {
+    if (cookies.pacient) {
+      setAuthPacient(cookies.pacient);
+    }
+  }, [cookies]);
+
+  const navigate = useNavigate();
+
   return (
     <pacientContext.Provider
       value={{
@@ -29,8 +38,16 @@ export const App = () => {
           </Col>
           <Col span={4}>
             <Button
-              style={{ backgroundColor: "white", borderRadius: 0 }}
-            ></Button>
+              onClick={() => {
+                if (authPacient) {
+                  setCookies("pacient", null);
+                  setAuthPacient(null);
+                }
+                navigate("/login");
+              }}
+            >
+              {authPacient ? "Logout" : "Login"}
+            </Button>
           </Col>
         </Row>
         <Row justify="center">

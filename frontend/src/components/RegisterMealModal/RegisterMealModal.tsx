@@ -24,9 +24,13 @@ interface IFormData {
 
 interface IProps {
   pacient: IPacient;
+  setShouldRefetch: (fetch: boolean) => void;
 }
 
-export const RegisterMealModal: React.FC<IProps> = ({ pacient }) => {
+export const RegisterMealModal: React.FC<IProps> = ({
+  pacient,
+  setShouldRefetch,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [formData, setFormData] = useState<IFormData>({
     ui: 0,
@@ -45,8 +49,6 @@ export const RegisterMealModal: React.FC<IProps> = ({ pacient }) => {
   const { Title } = Typography;
   const { Option } = Select;
   const handleOk = async () => {
-    console.log(formData);
-
     const api = new MealApi();
     const data = {
       type: formData.mealType,
@@ -60,6 +62,10 @@ export const RegisterMealModal: React.FC<IProps> = ({ pacient }) => {
 
     if (status !== 201) {
       message.error(`Houve erros ao cadastrar a refeição: ${msg}`);
+    } else {
+      message.success(`Refeição registrada com sucesso!`);
+      setShouldRefetch(true);
+      setIsModalVisible(false);
     }
   };
 
@@ -110,7 +116,6 @@ export const RegisterMealModal: React.FC<IProps> = ({ pacient }) => {
               style={{ width: "30%" }}
               defaultValue={mealTypes[0].value}
               onChange={(data) => {
-                console.log(data);
                 setFormData((prev: IFormData) => ({
                   ...prev,
                   mealType: data,
