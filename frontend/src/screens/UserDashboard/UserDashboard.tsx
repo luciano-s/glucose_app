@@ -1,31 +1,47 @@
-import React, { useEffect, useState } from "react";
-import { Col, Row, Tabs, Typography } from "antd";
+import React, { useEffect, useMemo, useState } from "react";
+import { Col, Row, Tabs } from "antd";
 import { RegisterGlucoseModal } from "../../components/RegisterGlucoseModal";
 import { MeasurementApi } from "../../api/measurementApi/measurement";
-import { IMeasurement, IPacient } from "../../types";
+import { IListMeal, IMeasurement, IPacient } from "../../types";
 import { MeasurementTable } from "../../components/MeasurementTable";
 import { RegisterMealModal } from "../../components/RegisterMealModal";
 import { Container } from "../../styled_components/Container";
-
+import { MealTable } from "../../components/MealTable";
+import { MealApi } from "../../api/mealApi/meal";
 interface IProps {
   pacient: IPacient | null;
 }
 
 export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
-  const { Title } = Typography;
   const [measurements, setMeasurements] = useState<Array<IMeasurement>>([]);
-  const api = new MeasurementApi();
+  const [meals, setMeals] = useState<Array<IListMeal>>([]);
   const { TabPane } = Tabs;
+  const api = new MeasurementApi();
+
   useEffect(() => {
     if (pacient) {
-      const getMeasurements = async () =>
+      const getMeasurements = async () => {
+        const api = new MeasurementApi();
         setMeasurements(
           await api.getAllMeasurements({
             pacient,
             filters: { pacient: pacient.id },
           })
         );
+      };
       getMeasurements();
+    }
+  }, [pacient]);
+
+  useEffect(() => {
+    if (pacient) {
+      const getMeals = async () => {
+        const api = new MealApi();
+        setMeals(
+          await api.getAllMeals({ pacient, filters: { pacient: pacient.id } })
+        );
+      };
+      getMeals();
     }
   }, [pacient]);
 
@@ -52,15 +68,17 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
             </Row>
           </Col>
         </Row>
-        <Container>
-          <Tabs>
-            <TabPane tab="Medições" key={1}>
-              <MeasurementTable measurements={measurements} />
-            </TabPane>
-            <TabPane tab="Refeições" key={2}>
-              <p>tabela com refeições</p>
-            </TabPane>
-          </Tabs>
+        <Container justify="center">
+          <Col span={18}>
+            <Tabs>
+              <TabPane tab="Medições" key={1}>
+                <MeasurementTable measurements={measurements} />
+              </TabPane>
+              <TabPane tab="Refeições" key={2}>
+                <MealTable meals={meals} />
+              </TabPane>
+            </Tabs>
+          </Col>
         </Container>
       </Col>
     </Row>
