@@ -10,9 +10,9 @@ class MealViewSet(viewsets.GenericViewSet):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        return Meal.objects.filter(user=self.request.user).select_related(
-            "measurement", "injection"
-        )
+        return Meal.objects.filter(
+            measurement__pacient__id=self.request.query_params["pacient"]
+        ).select_related("measurement__pacient", "injection")
 
     def get_serializer_class(self):
         return {"GET": MealSerializer, "POST": CreateMealSerializer}[
@@ -48,3 +48,7 @@ class MealViewSet(viewsets.GenericViewSet):
         return response.Response(
             data={"message": "Criado com sucesso!"}, status=status.HTTP_201_CREATED
         )
+
+    def list(self, request):
+        serializer = self.get_serializer(self.get_queryset(), many=True)
+        return response.Response(data=serializer.data, status=status.HTTP_200_OK)
