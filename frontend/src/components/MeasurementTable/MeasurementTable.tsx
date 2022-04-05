@@ -1,8 +1,8 @@
 import React from "react";
 import { Col, Row, Table } from "antd";
 import { IMeasurement } from "../../types";
-import { Measurement } from "../Measurement";
 import { Container } from "../../styled_components/Container";
+import { getColor } from "../../utils";
 interface IProps {
   measurements: Array<IMeasurement>;
 }
@@ -21,8 +21,6 @@ export const MeasurementTable: React.FC<IProps> = ({ measurements }) => {
     },
     { title: "Data", dataIndex: "timestamp", key: "timestamp" },
   ];
-  const getColor = (measurement: IMeasurement): string =>
-    measurement.is_glucose_level_good ? "#1bf20d" : "#CC3333";
 
   const formatedData = measurements.map((measurement) => ({
     ...measurement,

@@ -18,6 +18,19 @@ export interface IMeasurement {
   is_glucose_level_good: boolean;
 }
 
-export interface IMeal{
-  
+interface IMeasurementMeal extends IMeasurement {
+  pacient: number;
+}
+
+interface IInjectionMeal {
+  ui: number;
+  timestamp: string;
+  pacient: number;
+}
+export interface IListMeal {
+  id: number;
+  cho: number;
+  type: string;
+  measurement: IMeasurementMeal;
+  injection: IInjectionMeal;
 }
