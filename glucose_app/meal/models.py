@@ -10,7 +10,7 @@ class Meal(models.Model):
         ("DINNER", "Jantar"),
     )
 
-    cho = models.IntegerField()
+    cho = models.DecimalField(max_digits=6, decimal_places=2, null=True)
     measurement = models.ForeignKey(
         "measurement.Measurement", null=True, on_delete=models.SET_NULL
     )
