@@ -15,7 +15,7 @@ export interface IMeasurement {
   id: number;
   glycemia: number;
   timestamp: string;
-  is_glucose_level_good: boolean;
+  is_glycemia_good: boolean;
 }
 
 interface IMeasurementMeal extends IMeasurement {
