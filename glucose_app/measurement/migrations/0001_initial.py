@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('timestamp', models.DateTimeField()),
-                ('glicemy', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='glicemy.glicemy')),
+                ('glicemy', models.IntegerField(null=False, blank=False, default=0)),
                 ('pacient', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='pacient.pacient')),
             ],
         ),
