@@ -1,22 +1,36 @@
 from rest_framework import response, status, viewsets
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.filters import OrderingFilter, SearchFilter
 from meal.models import Meal
 from .serializer import CreateMealSerializer, MealSerializer
 from .repository import MealRepository
 from .use_case import CreateMealUseCase
+from .filterset import MealFilterSet
 
 
 class MealViewSet(viewsets.GenericViewSet):
+    queryset = Meal.objects.all()
+    
     permission_classes = [IsAuthenticated]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = MealFilterSet
 
     def get_queryset(self):
-        return (
-            Meal.objects.filter(
-                measurement__pacient__id=self.request.query_params["pacient"]
-            )
-            .select_related("measurement__pacient", "injection")
-            .order_by("-measurement__timestamp")
+
+        pacient_id = self.request.query_params.get(
+            "pacient",
+            None,
         )
+        if pacient_id:
+            return self.filter_queryset(
+                super()
+                .get_queryset()
+                .filter(
+                    measurement__pacient__id=pacient_id,
+                )
+            )
+        return super().get_queryset().none()
 
     def get_serializer_class(self):
         return {"GET": MealSerializer, "POST": CreateMealSerializer}[
