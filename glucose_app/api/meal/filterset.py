@@ -1,8 +1,9 @@
 from django_filters import (
-    FilterSet,
-    NumberFilter,
     DateTimeFilter,
     DateTimeFromToRangeFilter,
+    FilterSet,
+    NumberFilter,
+    NumericRangeFilter,
     OrderingFilter,
 )
 from meal.models import Meal
@@ -19,19 +20,17 @@ class MealFilterSet(FilterSet):
         field_name="measurment__timestamp",
         lookup_expr="gt",
     )
-    date_bewteen = DateTimeFromToRangeFilter(field_name="measurement__timestamp")
-
+    date_bewteen = DateTimeFromToRangeFilter(
+        field_name="measurement__timestamp",
+    )
+    glycemia_between = NumericRangeFilter(field_name="measurement__glycemia")
     ordering = OrderingFilter(
         fields=(
             ("measurement__timestamp", "date"),
             ("cho", "cho"),
-            ("injection__ui", "UI"),
+            ("injection__ui", "ui"),
+            ("injection__timestamp", "injection_date"),
+            ("measurement__glycemia", "glycemia"),
+            ("type", "meal")
         )
     )
-
-    class Meta:
-        model = Meal
-        fields = [
-            "cho",
-            "type",
-        ]
