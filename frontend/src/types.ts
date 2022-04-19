@@ -27,10 +27,18 @@ interface IInjectionMeal {
   timestamp: string;
   pacient: number;
 }
+
 export interface IListMeal {
   id: number;
   cho: number;
   type: string;
   measurement: IMeasurementMeal;
   injection: IInjectionMeal;
+}
+
+export interface IPaginatedListMeal {
+  results: IListMeal[];
+  totalPages: number;
+  total: number;
+  pageSize: number;
 }

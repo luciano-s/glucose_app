@@ -1,6 +1,6 @@
 import axios from "axios";
 import { axiosConfig } from "../axios/settings";
-import { IListMeal, IPacient } from "../../types";
+import { IListMeal, IPacient, IPaginatedListMeal } from "../../types";
 import { formatDateTimeFromApiStdToBRS } from "../../utils";
 
 const api = axios.create({
@@ -22,7 +22,17 @@ interface ICreateMeal {
 }
 
 interface IMeasurementsFilters {
-  pacient: number;
+  pacient?: number;
+  ordering?: string;
+  cho?: string;
+  date?: string;
+  date__lt?: string;
+  date__gt?: string;
+  date_bewteen?: string;
+  glycemia_between?: string;
+  type?: string;
+  page?: number;
+  page_size?: number;
 }
 
 interface IGetMeasurements {
@@ -62,11 +72,14 @@ export class MealApi {
   async getAllMeals({
     pacient,
     filters,
-  }: IGetMeasurements): Promise<IListMeal[]> {
+  }: IGetMeasurements): Promise<IPaginatedListMeal> {
     api.defaults.headers.common["Authorization"] =
       `Token ${pacient.token}` || "";
-    const response = await api.get("", { params: filters });
-    return response.data.map((item: IListMeal) => ({
+    const response = await api.get("", {
+      params: { ...filters, pacient: pacient.id },
+    });
+
+    const data = response.data.results.map((item: IListMeal) => ({
       ...item,
       measurement: {
         ...item.measurement,
@@ -77,5 +90,11 @@ export class MealApi {
         timestamp: formatDateTimeFromApiStdToBRS(item.injection.timestamp),
       },
     }));
+    return {
+      results: data,
+      total: response.data.count,
+      totalPages: response.data.total_pages,
+      pageSize: response.data.page_size,
+    };
   }
 }
