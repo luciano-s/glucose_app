@@ -30,7 +30,7 @@ class CreateMealSerializer(serializers.Serializer):
         glycemia = serializers.IntegerField(min_value=0)
         pacient = serializers.PrimaryKeyRelatedField(queryset=Pacient.objects.all())
 
-    cho = serializers.DecimalField(max_digits=4, decimal_places=2, allow_null=True)
+    cho = serializers.DecimalField(max_digits=6, decimal_places=2, allow_null=True)
     measurement = _MeasurementSerializer()
     injection = _InjectionSerializer()
     type = serializers.ChoiceField(choices=Meal.MEAL_TYPES)
