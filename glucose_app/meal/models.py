@@ -4,10 +4,10 @@ from django.db import models
 class Meal(models.Model):
 
     MEAL_TYPES = (
-        ("BREAKFAST", "Café da manhã"),
-        ("LUNCH", "Almoço"),
-        ("SNACK", "Lanche"),
-        ("DINNER", "Jantar"),
+        ("CAFE_DA_MANHA", "Café da manhã"),
+        ("ALMOCO", "Almoço"),
+        ("LANCHE", "Lanche"),
+        ("JANTAR", "Jantar"),
     )
 
     cho = models.DecimalField(max_digits=6, decimal_places=2, null=True)

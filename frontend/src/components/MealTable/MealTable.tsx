@@ -37,10 +37,10 @@ export const MealTable: React.FC<IProps> = ({
       key: "meal",
       sorter: true,
       filters: [
-        { text: "Almoço", value: "LUNCH" },
-        { text: "Café da Manhã", value: "BREAKFAST" },
-        { text: "Jantar", value: "DINNER" },
-        { text: "Lanche", value: "SNACK" },
+        { text: "Almoço", value: "ALMOCO"},
+        { text: "Café da Manhã", value: "CAFE_DA_MANHA" },
+        { text: "Jantar", value: "JANTAR" },
+        { text: "Lanche", value: "LANCHE" },
       ],
     },
     {

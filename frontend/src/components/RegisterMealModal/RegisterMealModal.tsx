@@ -37,13 +37,13 @@ export const RegisterMealModal: React.FC<IProps> = ({
     cho: 0,
     glycemia: -1,
     dateTime: "",
-    mealType: "BREAKFAST",
+    mealType: "CAFE_DA_MANHA",
   });
   const mealTypes = [
-    { key: "BREAKFAST", value: "Café da manhã" },
-    { key: "LUNCH", value: "Almoço" },
-    { key: "SNACK", value: "Lanche" },
-    { key: "DINNER", value: "Jantar" },
+    { key: "CAFE_DA_MANHA", value: "Café da manhã" },
+    { key: "ALMOCO", value: "Almoço" },
+    { key: "LANCHE", value: "Lanche" },
+    { key: "JANTAR", value: "Jantar" },
   ];
   const showModal = () => setIsModalVisible(true);
   const { Title } = Typography;
