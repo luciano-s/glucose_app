@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import { Col, Row, Tabs } from "antd";
 import { RegisterGlucoseModal } from "../../components/RegisterGlucoseModal";
 import { MeasurementApi } from "../../api/measurementApi/measurement";
-import { IPaginatedListMeal, IMeasurement, IPacient } from "../../types";
+import { IMeasurement, IPacient } from "../../types";
 import { MeasurementTable } from "../../components/MeasurementTable";
-import { MealTable } from "../../components/MealTable";
 import { RegisterMealModal } from "../../components/RegisterMealModal";
 import { Container } from "../../styled_components/Container";
-import { MealApi } from "../../api/mealApi/meal";
 import { MealTableContainer } from "../../components/MealTableContainer";
 
 interface IProps {
@@ -36,8 +34,6 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
     }
   }, [pacient, shouldFetchMeasurement]);
 
-
-
   return (
     <Row justify="center" style={{ marginTop: "64px" }}>
       <Col span={24}>
@@ -64,9 +60,7 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
                     {pacient && (
                       <RegisterMealModal
                         pacient={pacient}
-                        setShouldRefetch={(fetch: boolean) =>
-                          ({})
-                        }
+                        setShouldRefetch={(fetch: boolean) => ({})}
                       />
                     )}
                   </Col>

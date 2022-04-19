@@ -8,10 +8,6 @@ const api = axios.create({
   baseURL: `${axiosConfig.baseURL}/meal/`,
 });
 
-interface IMeasurementData {
-  glycemia: number;
-  timestamp: string;
-}
 
 interface ICreateMeal {
   type: string;
