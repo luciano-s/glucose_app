@@ -6,14 +6,17 @@ from api.measurement.use_case import CreateMeasurementUseCase
 from measurement.models import Measurement
 from .serializer import CreateMeasurementSerializer, MeasurementSerializer
 from .repository import MeasurementRepository
+from utils.pagination import CustomPagePagination
 
 
 class MeasurementViewSet(viewsets.GenericViewSet):
+    queryset = Measurement.objects.all()
     permission_classes = [IsAuthenticated]
+    pagination_class = CustomPagePagination
 
     def get_serializer_class(self):
-        return {"get": MeasurementSerializer, "post": CreateMeasurementSerializer}[
-            self.request.method.lower()
+        return {"GET": MeasurementSerializer, "POST": CreateMeasurementSerializer}[
+            self.request.method
         ]
 
     def get_queryset(self):
@@ -29,7 +32,13 @@ class MeasurementViewSet(viewsets.GenericViewSet):
         return qs.order_by("-timestamp")
 
     def list(self, request):
-        serializer = self.get_serializer(self.get_queryset(), many=True)
+        queryset = self.get_queryset()
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
         return response.Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request):
