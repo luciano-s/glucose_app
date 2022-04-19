@@ -17,12 +17,6 @@ export const MealTable: React.FC<IProps> = ({
 }) => {
   const columns = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      sorter: true,
-    },
-    {
       title: "Glicemia",
       dataIndex: "glycemia",
       key: "glycemia",

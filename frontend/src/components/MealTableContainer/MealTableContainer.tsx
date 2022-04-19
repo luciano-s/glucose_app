@@ -42,7 +42,6 @@ export const MealTableContainer: React.FC<{ pacient: IPacient }> = ({
     filters: any,
     sorter: { field: string; order: string }
   ) => {
-    console.log(pagination);
     setPagination(() => ({ page: pagination.current, ...pagination }));
     setOrder(() => ({ ...sorter }));
   };

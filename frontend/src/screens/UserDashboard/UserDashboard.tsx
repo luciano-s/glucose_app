@@ -36,6 +36,8 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
     }
   }, [pacient, shouldFetchMeasurement]);
 
+
+
   return (
     <Row justify="center" style={{ marginTop: "64px" }}>
       <Col span={24}>
@@ -62,7 +64,9 @@ export const UserDashboard: React.FC<IProps> = ({ pacient }) => {
                     {pacient && (
                       <RegisterMealModal
                         pacient={pacient}
-                        setShouldRefetch={(fetch: boolean) => ({})}
+                        setShouldRefetch={(fetch: boolean) =>
+                          ({})
+                        }
                       />
                     )}
                   </Col>
