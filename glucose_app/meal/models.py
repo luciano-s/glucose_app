@@ -18,3 +18,4 @@ class Meal(models.Model):
         "injection.Injection", null=True, on_delete=models.SET_NULL
     )
     type = models.CharField(choices=MEAL_TYPES, max_length=32, null=True)
+    obs = models.TextField(verbose_name="Meal description", null=True)
