@@ -1,6 +1,6 @@
 import axios from "axios";
 import { axiosConfig } from "../axios/settings";
-import { IListMeal, IPacient, IPaginatedListMeal } from "../../types";
+import { IFilters, IListMeal, IPacient, IPaginatedListMeal } from "../../types";
 import { formatDateTimeFromApiStdToBRS } from "../../utils";
 
 const api = axios.create({
@@ -17,9 +17,7 @@ interface ICreateMeal {
   ui: number;
 }
 
-interface IMeasurementsFilters {
-  pacient?: number;
-  ordering?: string;
+interface IMealFilters extends IFilters{
   cho?: string;
   date?: string;
   date__lt?: string;
@@ -27,13 +25,11 @@ interface IMeasurementsFilters {
   date_bewteen?: string;
   glycemia_between?: string;
   type?: string;
-  page?: number;
-  page_size?: number;
 }
 
-interface IGetMeasurements {
+interface IGetMeals {
   pacient: IPacient;
-  filters?: IMeasurementsFilters;
+  filters?: IMealFilters;
 }
 
 export class MealApi {
@@ -68,7 +64,7 @@ export class MealApi {
   async getAllMeals({
     pacient,
     filters,
-  }: IGetMeasurements): Promise<IPaginatedListMeal> {
+  }: IGetMeals): Promise<IPaginatedListMeal> {
     api.defaults.headers.common["Authorization"] =
       `Token ${pacient.token}` || "";
     const response = await api.get("", {

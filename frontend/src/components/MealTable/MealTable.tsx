@@ -1,13 +1,13 @@
 import React from "react";
 import { Col, Table } from "antd";
 import { Container } from "../../styled_components/Container";
-import { IListMeal } from "../../types";
+import { IListMeal, IPagination } from "../../types";
 import { getColor } from "../../utils";
 
 interface IProps {
   meals: Array<IListMeal>;
   handleChange: (pagination: any, filters: any, sorter: any) => void;
-  pagination: { page: number; pageSize: number; total: number };
+  pagination: IPagination;
 }
 
 export const MealTable: React.FC<IProps> = ({
@@ -37,7 +37,7 @@ export const MealTable: React.FC<IProps> = ({
       key: "meal",
       sorter: true,
       filters: [
-        { text: "Almoço", value: "ALMOCO"},
+        { text: "Almoço", value: "ALMOCO" },
         { text: "Café da Manhã", value: "CAFE_DA_MANHA" },
         { text: "Jantar", value: "JANTAR" },
         { text: "Lanche", value: "LANCHE" },
@@ -72,7 +72,7 @@ export const MealTable: React.FC<IProps> = ({
     uiTimestamp: meal.injection.timestamp,
     measurement: meal.measurement,
   }));
-  console.log(pagination);
+
   return (
     <Container>
       <Col span={24}>

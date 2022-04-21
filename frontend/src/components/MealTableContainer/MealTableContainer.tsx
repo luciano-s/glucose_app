@@ -3,19 +3,25 @@ import { Col, Row } from "antd";
 import { MealTable } from "../MealTable/MealTable";
 import { MealApi } from "../../api/mealApi/meal";
 import { formatOrder } from "../../utils";
-import { IListMeal, IPacient } from "../../types";
+import {
+  IAntdPagination,
+  IListMeal,
+  IPacient,
+  IPagination,
+  ISorter,
+} from "../../types";
 
 export const MealTableContainer: React.FC<{ pacient: IPacient }> = ({
   pacient,
 }) => {
   const [meals, setMeals] = useState<IListMeal[]>([]);
-  const [pagination, setPagination] = useState({
+  const [pagination, setPagination] = useState<IPagination>({
     page: 1,
     pageSize: 10,
     total: 100,
   });
-  const [order, setOrder] = useState({ field: "", order: "" });
-  
+  const [order, setOrder] = useState<ISorter>({ field: "", order: "" });
+
   useEffect(() => {
     const getMeals = async () => {
       const api = new MealApi();
@@ -31,20 +37,25 @@ export const MealTableContainer: React.FC<{ pacient: IPacient }> = ({
         pageSize: data.pageSize,
         total: data.total,
       };
-      setMeals(data.results);
+      setMeals(() => data.results);
       setPagination((prev) => ({ ...prev, ...pag }));
     };
     getMeals();
   }, [order, pacient, pagination.page]);
 
   const handleChange = (
-    pagination: { current: number; pageSize: number; total: number },
+    pagination: IAntdPagination,
     filters: any,
-    sorter: { field: string; order: string }
+    sorter: ISorter
   ) => {
-    setPagination(() => ({ page: pagination.current, ...pagination }));
+    setPagination(() => ({
+      page: pagination.current,
+      total: pagination.total,
+      pageSize: pagination.total,
+    }));
     setOrder(() => ({ ...sorter }));
   };
+
   return (
     <Row>
       <Col span={24}>
