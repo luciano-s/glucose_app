@@ -15,7 +15,7 @@ export const MealTableContainer: React.FC<{ pacient: IPacient }> = ({
     total: 100,
   });
   const [order, setOrder] = useState({ field: "", order: "" });
-
+  
   useEffect(() => {
     const getMeals = async () => {
       const api = new MealApi();
