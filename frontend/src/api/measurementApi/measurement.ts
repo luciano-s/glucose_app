@@ -1,7 +1,13 @@
 import axios from "axios";
 import { axiosConfig } from "../axios/settings";
-import { IMeasurement, IPacient } from "../../types";
+import {
+  IFilters,
+  IMeasurement,
+  IPacient,
+  IPaginatedMeasurement,
+} from "../../types";
 import { formatDateTimeFromApiStdToBRS } from "../../utils";
+
 const api = axios.create({
   ...axiosConfig,
   baseURL: `${axiosConfig.baseURL}/measurement/`,
@@ -17,13 +23,9 @@ interface ICreateMeasurement {
   pacient: IPacient;
 }
 
-interface IMeasurementsFilters {
-  pacient: number;
-}
-
 interface IGetMeasurements {
   pacient: IPacient;
-  filters?: IMeasurementsFilters;
+  filters?: IFilters;
 }
 
 export class MeasurementApi {
@@ -59,13 +61,21 @@ export class MeasurementApi {
   async getAllMeasurements({
     pacient,
     filters,
-  }: IGetMeasurements): Promise<IMeasurement[]> {
+  }: IGetMeasurements): Promise<IPaginatedMeasurement> {
     api.defaults.headers.common["Authorization"] =
       `Token ${pacient.token}` || "";
-    const response = await api.get("", { params: filters });
-    return response.data.map((item: IMeasurement) => ({
+    const response = await api.get("", {
+      params: { ...filters, pacient: pacient.id },
+    });
+    const data = response.data.results.map((item: IMeasurement) => ({
       ...item,
       timestamp: formatDateTimeFromApiStdToBRS(item.timestamp),
     }));
+    return {
+      results: data,
+      total: response.data.count,
+      totalPages: response.data.total_pages,
+      pageSize: response.data.page_size,
+    };
   }
 }

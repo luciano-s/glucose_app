@@ -18,6 +18,13 @@ export interface IMeasurement {
   is_glycemia_good: boolean;
 }
 
+export interface IPaginatedMeasurement {
+  results: IMeasurement[];
+  totalPages: number;
+  total: number;
+  pageSize: number;
+}
+
 interface IMeasurementMeal extends IMeasurement {
   pacient: number;
 }
@@ -41,4 +48,28 @@ export interface IPaginatedListMeal {
   totalPages: number;
   total: number;
   pageSize: number;
+}
+
+export interface IPagination {
+  page: number;
+  pageSize: number;
+  total: number;
+}
+
+export interface IAntdPagination {
+  current: number;
+  pageSize: number;
+  total: number;
+}
+
+export interface ISorter {
+  field: string;
+  order: string;
+}
+
+export interface IFilters {
+  pacient?: number;
+  ordering?: string;
+  page?: number;
+  page_size?: number;
 }
