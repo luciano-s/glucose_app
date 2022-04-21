@@ -24,7 +24,9 @@ class Measurement(models.Model):
         choices=MEASUREMENT_TYPE, max_length=200, default=OTHER
     )
     obs = models.TextField(verbose_name="Measurement description", null=True)
-    ui_correction = models.DecimalField(max_digits=4, decimal_places=2, default=0)
+    injection = models.ForeignKey(
+        "injection.Injection", null=True, on_delete=models.SET_NULL
+    )
 
     @property
     def is_glycemia_good(self) -> bool or None:
