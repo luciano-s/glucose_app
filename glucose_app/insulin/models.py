@@ -34,6 +34,7 @@ class Insulin(models.Model):
     name = models.CharField(max_length=100)
     dosis = models.DecimalField(max_digits=4, decimal_places=2, null=True)
     pacient = models.ForeignKey("pacient.Pacient", on_delete=models.CASCADE, null=True)
-    
+    is_correction = models.BooleanField(default=False)
+
     def __str__(self) -> str:
         return f"Insulin {self.type[1]} {self.name}"
