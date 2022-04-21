@@ -6,7 +6,6 @@ from django_filters import (
     NumericRangeFilter,
     OrderingFilter,
 )
-from meal.models import Meal
 
 
 class MealFilterSet(FilterSet):
@@ -31,6 +30,6 @@ class MealFilterSet(FilterSet):
             ("injection__ui", "ui"),
             ("injection__timestamp", "injection_date"),
             ("measurement__glycemia", "glycemia"),
-            ("type", "meal")
+            ("type", "meal"),
         )
     )

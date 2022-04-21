@@ -1,18 +1,20 @@
-from http.client import REQUEST_HEADER_FIELDS_TOO_LARGE
-from warnings import filters
 from rest_framework import response, status, viewsets
 from rest_framework.permissions import IsAuthenticated
+from django_filters.rest_framework import DjangoFilterBackend
 from api.measurement.use_case import CreateMeasurementUseCase
 from measurement.models import Measurement
 from .serializer import CreateMeasurementSerializer, MeasurementSerializer
 from .repository import MeasurementRepository
 from utils.pagination import CustomPagePagination
+from .filterset import MeasurementFilterSet
 
 
 class MeasurementViewSet(viewsets.GenericViewSet):
     queryset = Measurement.objects.all()
     permission_classes = [IsAuthenticated]
     pagination_class = CustomPagePagination
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = MeasurementFilterSet
 
     def get_serializer_class(self):
         return {"GET": MeasurementSerializer, "POST": CreateMeasurementSerializer}[
@@ -20,16 +22,18 @@ class MeasurementViewSet(viewsets.GenericViewSet):
         ]
 
     def get_queryset(self):
-        pacient = self.request.query_params.get("pacient", None)
-
-        qs = (
-            Measurement.objects.filter(pacient__id=pacient, meal__isnull=True)
-            if pacient
-            else Measurement.objects.filter(
-                pacient__user=self.request.user, meal__isnull=True
+        pacient_id = self.request.query_params.get("pacient", None)
+        if pacient_id:
+            return self.filter_queryset(
+                super()
+                .get_queryset()
+                .filter(
+                    pacient__id=pacient_id,
+                    meal__isnull=True,
+                )
             )
-        )
-        return qs.order_by("-timestamp")
+
+        return super().get_queryset().none()
 
     def list(self, request):
         queryset = self.get_queryset()
